@@ -1,0 +1,15 @@
+# Dépendances et fichiers générés (recréés par « npm install » et « npm run build »)
+node_modules/
+dist/
+
+# Clés secrètes : ne jamais les envoyer sur GitHub
+.env
+.env.*
+!.env.example
+
+# Fichiers d'outils
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
