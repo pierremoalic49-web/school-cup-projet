@@ -1,7 +1,7 @@
 ﻿// Les panneaux LED qui défilent autour du terrain et l'écran géant (qui affiche le vrai score).
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import { canvas } from './util'
+import { canvas, loadImage } from './util'
 
 export interface ScreenInfo {
   mode: 'logo' | 'score' | 'goal'
@@ -15,26 +15,34 @@ export interface ScreenInfo {
 
 const LED_PERIOD = 46 // mètres de panneau pour un tour complet du message
 
-function ledCanvas(messages: [string, string][]) {
+/** Le bandeau LED : les messages, séparés par l'icône School Cup (ou un point doré tant qu'elle n'est pas chargée). */
+function ledCanvas(messages: [string, string][], icon: HTMLImageElement | null) {
   const [c, x] = canvas(2048, 64)
   x.fillStyle = '#04050a'
   x.fillRect(0, 0, 2048, 64)
   x.textBaseline = 'middle'
   x.font = '400 42px Anton, Impact, sans-serif'
+  const iconH = 56
+  const iconW = icon ? (iconH * icon.naturalWidth) / icon.naturalHeight : 10
+  const sep = iconW + 56 // place réservée au séparateur
   const widths = messages.map(([t]) => x.measureText(t).width)
-  const total = widths.reduce((a, w) => a + w + 70, 0)
-  const scale = 2048 / total
+  // Seul le texte est étiré pour que le message fasse exactement le tour du panneau (l'icône garde ses proportions).
+  const scale = (2048 - messages.length * sep) / widths.reduce((a, w) => a + w, 0)
   let px = 0
   messages.forEach(([t, col], i) => {
+    if (icon) x.drawImage(icon, px + 28, (64 - iconH) / 2, iconW, iconH)
+    else {
+      x.fillStyle = '#ffc63d'
+      x.fillRect(px + 28, 28, 9, 9)
+    }
+    px += sep
     x.save()
     x.translate(px, 0)
     x.scale(scale, 1)
     x.fillStyle = col
-    x.fillText(t, 20, 35)
+    x.fillText(t, 0, 35)
     x.restore()
-    px += (widths[i] + 70) * scale
-    x.fillStyle = '#ffc63d'
-    x.fillRect(px - 26 * scale, 28, 9, 9)
+    px += widths[i] * scale
   })
   // Trame de pixels LED.
   x.fillStyle = 'rgba(0,0,0,0.35)'
@@ -45,13 +53,13 @@ function ledCanvas(messages: [string, string][]) {
 
 export function buildScreens(scene: THREE.Scene) {
   const defaultMsgs: [string, string][] = [
-    ['SCHOOL CUP', '#ffc63d'],
     ['LYCÉE SACRÉ-CŒUR LA SALLE', '#ffffff'],
     ['ANGERS', '#3fe3ff'],
     ['UNE SEULE ÉCOLE', '#ffe7a3'],
     ['FAIR-PLAY', '#ff6fb0'],
   ]
-  const tex = new THREE.CanvasTexture(ledCanvas(defaultMsgs))
+  let icon: HTMLImageElement | null = null
+  const tex = new THREE.CanvasTexture(ledCanvas(defaultMsgs, null))
   tex.colorSpace = THREE.SRGBColorSpace
   tex.wrapS = THREE.RepeatWrapping
   tex.anisotropy = 8
@@ -150,20 +158,21 @@ export function buildScreens(scene: THREE.Scene) {
       sx.fillStyle = '#ffffff'
       sx.font = '400 210px Anton, Impact, sans-serif'
       sx.fillText(`${info.scoreA ?? 0}-${info.scoreB ?? 0}`, W / 2, 262)
-      sx.font = '600 34px "Barlow Condensed", sans-serif'
-      sx.fillStyle = '#a3a9c9'
-      sx.fillText('SCHOOL CUP', W / 2, H - 70)
-    } else {
-      sx.fillStyle = '#ffffff'
-      sx.font = '400 150px Anton, Impact, sans-serif'
-      sx.fillText('SCHOOL', W / 2, 200)
-      const gg = sx.createLinearGradient(0, 260, 0, 470)
-      gg.addColorStop(0, '#ffe7a3')
-      gg.addColorStop(0.5, '#ffc63d')
-      gg.addColorStop(1, '#a8740a')
-      sx.fillStyle = gg
-      sx.font = '400 200px Anton, Impact, sans-serif'
-      sx.fillText('CUP', W / 2, 370)
+      if (icon) {
+        const h = 96
+        const w = (h * icon.naturalWidth) / icon.naturalHeight
+        sx.drawImage(icon, W / 2 - w / 2, H - 40 - h, w, h)
+      }
+    } else if (icon) {
+      // Écran d'attente : l'icône School Cup en grand, avec un halo doré.
+      const glow = sx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 300)
+      glow.addColorStop(0, 'rgba(255,198,61,0.28)')
+      glow.addColorStop(1, 'rgba(255,198,61,0)')
+      sx.fillStyle = glow
+      sx.fillRect(0, 0, W, H)
+      const h = 470
+      const w = (h * icon.naturalWidth) / icon.naturalHeight
+      sx.drawImage(icon, W / 2 - w / 2, (H - h) / 2, w, h)
     }
     // Trame de pixels.
     sx.fillStyle = 'rgba(0,0,0,0.28)'
@@ -172,12 +181,23 @@ export function buildScreens(scene: THREE.Scene) {
     screenTex.needsUpdate = true
   }
   draw(0)
+  const redrawLed = () => {
+    ;(tex.image as HTMLCanvasElement).getContext('2d')!.drawImage(ledCanvas(defaultMsgs, icon), 0, 0)
+    tex.needsUpdate = true
+  }
   document.fonts?.ready.then(() => {
     draw(0)
-    const c = ledCanvas(defaultMsgs)
-    ;(tex.image as HTMLCanvasElement).getContext('2d')!.drawImage(c, 0, 0)
-    tex.needsUpdate = true
+    redrawLed()
   })
+  loadImage('/logo/icone.webp')
+    .then((img) => {
+      icon = img
+      draw(0)
+      redrawLed()
+    })
+    .catch(() => {
+      /* sans icône, les panneaux gardent un point doré */
+    })
 
   let lastDraw = 0
   return {

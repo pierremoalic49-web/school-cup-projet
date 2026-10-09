@@ -1,7 +1,7 @@
 // La pelouse : couleur, bandes de tonte qui changent selon l'angle de vue, lignes, logo peint,
 // usure devant les buts. Plus les buts avec leurs filets qui bougent et les drapeaux de coin.
 import * as THREE from 'three'
-import { canvas, GLSL_NOISE, seeded, type Tier } from './util'
+import { canvas, GLSL_NOISE, loadImage, seeded, type Tier } from './util'
 
 export const PITCH_L = 105
 export const PITCH_W = 68
@@ -117,19 +117,13 @@ function pitchCanvas(tier: Tier) {
   return { c, PX, cx, cy }
 }
 
-/** Peint le logo School Cup au rond central (appelé de nouveau quand la police Anton est chargée). */
-function paintLogo(x: CanvasRenderingContext2D, PX: number, cx: number, cy: number) {
+/** Peint l'écusson blanc au rond central, comme de la peinture sur l'herbe (on voit un peu le gazon au travers). */
+function paintLogo(x: CanvasRenderingContext2D, PX: number, cx: number, cy: number, img: HTMLImageElement) {
+  const h = 13 * PX // 13 m de haut : tient dans le rond central (18,30 m de diamètre)
+  const w = (h * img.naturalWidth) / img.naturalHeight
   x.save()
-  x.translate(cx, cy)
-  x.textAlign = 'center'
-  x.textBaseline = 'middle'
-  x.globalAlpha = 0.62
-  x.fillStyle = '#e9e6da'
-  x.font = `400 ${3.6 * PX}px Anton, Impact, sans-serif`
-  x.fillText('SCHOOL', 0, -3.1 * PX)
-  x.fillStyle = '#f2c14b'
-  x.font = `400 ${5.6 * PX}px Anton, Impact, sans-serif`
-  x.fillText('CUP', 0, 2.2 * PX)
+  x.globalAlpha = 0.7
+  x.drawImage(img, cx - w / 2, cy - h / 2, w, h)
   x.restore()
 }
 
@@ -175,15 +169,15 @@ export function buildPitch(scene: THREE.Scene, renderer: THREE.WebGLRenderer, ti
   tex.colorSpace = THREE.SRGBColorSpace
   tex.anisotropy = Math.min(tier === 'low' ? 4 : 12, renderer.capabilities.getMaxAnisotropy())
   const x = c.getContext('2d')!
-  // On garde l'herbe sous le logo pour pouvoir le repeindre avec la vraie police une fois chargée.
-  const R = Math.round(10 * PX)
-  const under = x.getImageData(cx - R, cy - R, R * 2, R * 2)
-  paintLogo(x, PX, cx, cy)
-  document.fonts?.load('400 100px Anton').then(() => {
-    x.putImageData(under, cx - R, cy - R)
-    paintLogo(x, PX, cx, cy)
-    tex.needsUpdate = true
-  })
+  // L'écusson arrive un peu après le stade : on le peint dès qu'il est chargé.
+  loadImage('/logo/ecusson-blanc.png')
+    .then((img) => {
+      paintLogo(x, PX, cx, cy, img)
+      tex.needsUpdate = true
+    })
+    .catch(() => {
+      /* pas de logo au rond central : la pelouse reste belle sans */
+    })
 
   const mat = new THREE.MeshStandardMaterial({
     map: tex,

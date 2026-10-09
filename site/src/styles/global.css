@@ -69,9 +69,16 @@ body.cine .cine-bar { height: 11vh; }
 .crest-halo { position: absolute; left: 50%; top: 50%; width: min(700px, 125vw); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255, 198, 61, 0.26) 0%, rgba(255, 198, 61, 0.07) 38%, rgba(255, 198, 61, 0) 66%); animation: halo 3.4s ease-in-out infinite; pointer-events: none; }
 @keyframes halo { 0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.96); } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } }
 .crest-kicker { position: relative; margin: 0; font-family: var(--f-label); font-weight: 700; letter-spacing: 0.42em; text-transform: uppercase; font-size: clamp(11px, 1.6vw, 15px); text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85); padding-left: 0.42em; }
-.crest-word { display: block; position: relative; margin: 0; font-family: var(--f-display); font-weight: 400; line-height: 0.82; text-transform: uppercase; }
-.crest-word.w1 { font-size: clamp(66px, 15vw, 190px); color: #fff; text-shadow: 0 6px 40px rgba(0, 0, 0, 0.7); }
-.crest-word.w2 { font-size: clamp(88px, 20vw, 250px); background: linear-gradient(180deg, #fff6dc 0%, var(--gold-hi) 18%, var(--gold) 52%, var(--gold-deep) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 34px rgba(255, 198, 61, 0.5)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.6)); }
+/* L'écusson officiel : il apparaît dans le noir, un reflet balaie l'or, les éclats scintillent. */
+.crest-logo { position: relative; margin: 6px 0 2px; width: min(66vw, 340px, 40vh); aspect-ratio: 760 / 881; animation: crestIn 1.4s var(--ease) both; }
+.crest-logo img { display: block; width: 100%; height: 100%; }
+.crest-shine { position: absolute; inset: 0; pointer-events: none; -webkit-mask: url(/logo/ecusson.webp) center / contain no-repeat; mask: url(/logo/ecusson.webp) center / contain no-repeat; background: linear-gradient(105deg, rgba(255, 255, 255, 0) 42%, rgba(255, 248, 225, 0.7) 50%, rgba(255, 255, 255, 0) 58%) no-repeat; background-size: 300% 100%; mix-blend-mode: overlay; animation: shine 5s ease-in-out 1.2s infinite; }
+.crest-sparkle { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; background: radial-gradient(circle, #fff 0 8%, rgba(255, 255, 255, 0) 9%), conic-gradient(from 45deg, transparent 0 20%, rgba(255, 255, 255, 0.95) 25%, transparent 30% 45%, rgba(255, 255, 255, 0.95) 50%, transparent 55% 70%, rgba(255, 255, 255, 0.95) 75%, transparent 80% 95%, rgba(255, 255, 255, 0.95) 100%); -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%); opacity: 0; animation: twinkle 3.2s ease-in-out infinite; }
+.crest-sparkle.s1 { left: 85%; top: 13%; animation-delay: 1.9s; }
+.crest-sparkle.s2 { left: 62%; top: 72%; animation-delay: 3.1s; width: 16px; height: 16px; margin: -8px 0 0 -8px; }
+@keyframes crestIn { from { opacity: 0; transform: scale(0.9); filter: brightness(0.2) blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes shine { 0% { background-position: 130% 0; } 45%, 100% { background-position: -30% 0; } }
+@keyframes twinkle { 0%, 70%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); } 80% { opacity: 1; transform: scale(1.15) rotate(25deg); } }
 .crest-rule { position: relative; display: flex; align-items: center; gap: 14px; margin: 10px 0 0; font-family: var(--f-label); font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; font-size: clamp(11px, 1.4vw, 14px); color: var(--gold-hi); }
 .crest-rule::before, .crest-rule::after { content: ''; width: clamp(30px, 8vw, 90px); height: 1px; background: linear-gradient(90deg, rgba(255, 198, 61, 0), var(--gold)); }
 .crest-rule::after { transform: scaleX(-1); }
@@ -100,8 +107,8 @@ body.cine .cine-bar { height: 11vh; }
 .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; padding-top: env(safe-area-inset-top, 0px); background: linear-gradient(180deg, rgba(4, 6, 13, 0.9), rgba(4, 6, 13, 0)); opacity: 0; transform: translateY(-20px); transition: opacity 0.8s ease, transform 0.8s ease; pointer-events: none; }
 body.arrived .topbar { opacity: 1; transform: none; pointer-events: auto; }
 .topbar-in { max-width: 1240px; margin: 0 auto; padding: 14px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.brand { display: flex; align-items: baseline; gap: 6px; font-family: var(--f-display); font-size: 24px; letter-spacing: 0.02em; text-decoration: none; color: var(--text); }
-.brand b { font-weight: 400; color: var(--gold); }
+.brand { display: flex; align-items: center; text-decoration: none; color: var(--text); }
+.brand img { display: block; height: 40px; width: auto; }
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav a, .icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid transparent; background: transparent; color: var(--text); font-family: var(--f-label); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 14px; text-decoration: none; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
 .nav a:hover, .icon-btn:hover { border-color: var(--line); background: rgba(255, 255, 255, 0.05); }
@@ -294,6 +301,8 @@ body.arrived .site { opacity: 1; pointer-events: auto; }
 .footer { padding-block: 90px 40px; }
 .footer-in { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--dim); border-top: 1px solid var(--line); padding-top: 22px; }
 .footer a { color: var(--dim); }
+.footer .credits { margin: 14px 0 0; font-size: 12px; color: var(--dim); opacity: 0.85; }
+.footer .credits a { text-underline-offset: 2px; }
 
 /* ---------- Célébration « BUUUT ! » ---------- */
 .goal { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; text-align: center; padding: 16px; }
@@ -303,6 +312,8 @@ body.arrived .site { opacity: 1; pointer-events: auto; }
 .goal-who small { display: block; margin-top: 4px; font-size: 0.62em; letter-spacing: 0.24em; color: var(--gold-hi); }
 @keyframes goalIn { 0% { opacity: 0; transform: scale(3) skewX(-10deg); } 12% { opacity: 1; transform: scale(0.92) skewX(-10deg); } 20% { transform: scale(1.04) skewX(-10deg); } 82% { opacity: 1; transform: scale(1) skewX(-10deg); } 100% { opacity: 0; transform: scale(1.3) skewX(-10deg); } }
 @keyframes goalWho { 0%, 14% { opacity: 0; transform: translateY(20px); } 26%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.goal-crest { position: absolute; left: 50%; top: 50%; width: min(78vw, 560px, 62vh); height: auto; transform: translate(-50%, -50%); opacity: 0; animation: goalCrest 3s var(--ease) forwards; pointer-events: none; }
+@keyframes goalCrest { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6) rotate(-6deg); } 18% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.04) rotate(0deg); } 80% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.1); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.25); } }
 @keyframes goalBg { 0% { opacity: 0; } 8%, 85% { opacity: 1; } 100% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {

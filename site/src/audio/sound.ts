@@ -3,7 +3,14 @@
 // public/sons/ (foule.mp3, but.mp3, sifflet.mp3), ils sont utilisés à la place.
 // Rien ne démarre tout seul : tout commence au clic sur « Entrer dans le stade ».
 
+import { storeGet, storeSet } from '../data/safe'
+
 type Ctx = AudioContext
+
+/** Le mixage (pour la musique) : le contexte audio et le volume général. null tant que le son n'a pas démarré. */
+export function audioGraph(): { ctx: Ctx; master: GainNode } | null {
+  return ctx ? { ctx, master } : null
+}
 
 let ctx: Ctx | null = null
 let master: GainNode
@@ -11,7 +18,8 @@ let crowdGain: GainNode
 let crowdFilter: BiquadFilterNode
 let roarGain: GainNode
 let roarFilter: BiquadFilterNode
-let muted = false
+// Le choix « son coupé » du visiteur est retenu d'une visite à l'autre.
+let muted = storeGet('local', 'schoolcup-muted') === '1'
 const files: Partial<Record<'foule' | 'but' | 'sifflet', AudioBuffer>> = {}
 
 function noiseBuffer(c: Ctx, seconds: number) {
@@ -300,8 +308,10 @@ export const sound = {
     o.stop(t + 1.4)
   },
 
+  /** Coupe TOUT (musique + foule + bruitages) et retient le choix pour la prochaine visite. */
   setMuted(m: boolean) {
     muted = m
+    storeSet('local', 'schoolcup-muted', m ? '1' : null)
     if (ctx) master.gain.setTargetAtTime(m ? 0 : 0.9, ctx.currentTime, 0.05)
   },
 }

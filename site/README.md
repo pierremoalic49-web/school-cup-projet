@@ -93,6 +93,21 @@ src/
 supabase/schema.sql        la base de données à créer dans Supabase
 ```
 
+## Logo
+
+Le logo officiel est dans `../assets/logo/` (originaux) ; les versions allégées pour le web sont dans `public/logo/` :
+`ecusson.webp` (intro, célébration, admin), `horizontal-plat.svg` (menu), `icone-plat.svg` (onglet du navigateur),
+`icone.webp` (écran géant et panneaux LED du stade), `ecusson-blanc.png` (peint au rond central),
+`apple-touch-icon.png` et `partage.jpg` (icône du téléphone, aperçu quand on partage le lien).
+
+## Musique
+
+« Arena Hype Anthem » de BudgetPixel AI (licence CC BY 4.0, crédit dans le pied de page), dans `public/sons/`.
+Elle démarre au clic sur « Entrer dans le stade », réglée pour que l'entrée de la batterie (9,56 s dans le morceau,
+mesurée sur la forme d'onde) tombe pile sur l'arrivée au bord du terrain. Ensuite elle tourne en boucle sans
+coupure (fondu enchaîné de 1,5 s), plus bas sous la foule, encore plus bas après 2 minutes, et s'efface pendant
+chaque « BUUUT ! ». Le bouton son coupe tout et le choix est retenu. Code : `src/audio/music.ts`.
+
 ## Sons
 
 Le son est fabriqué par le navigateur (rumeur, clameur faite de dizaines de « voix », sifflet, applaudissements).

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -10 440 510" width="440" height="510" role="img" aria-label="Icône School Cup"><defs>
+<!-- polished gold: banded reflections like real metal -->
+<linearGradient id="irgoldH" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#5E3F03"/><stop offset=".08" stop-color="#A77510"/>
+  <stop offset=".22" stop-color="#FFF3C8"/><stop offset=".3" stop-color="#F2C24A"/>
+  <stop offset=".46" stop-color="#9C6A0A"/><stop offset=".58" stop-color="#E9B43A"/>
+  <stop offset=".7" stop-color="#FFE8A0"/><stop offset=".82" stop-color="#C08A16"/>
+  <stop offset=".92" stop-color="#6E4A05"/><stop offset="1" stop-color="#3F2A02"/>
+</linearGradient>
+<linearGradient id="irgoldV" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFF6D6"/><stop offset=".18" stop-color="#FFD565"/>
+  <stop offset=".45" stop-color="#C98F14"/><stop offset=".55" stop-color="#8E5F07"/>
+  <stop offset=".7" stop-color="#E7AF33"/><stop offset=".88" stop-color="#FFE29A"/>
+  <stop offset="1" stop-color="#9A6808"/>
+</linearGradient>
+<linearGradient id="irgoldRim" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#FFF4CF"/><stop offset=".2" stop-color="#E8B23A"/>
+  <stop offset=".38" stop-color="#8A5C06"/><stop offset=".55" stop-color="#FFDF8A"/>
+  <stop offset=".75" stop-color="#B07A0E"/><stop offset="1" stop-color="#5A3C03"/>
+</linearGradient>
+<!-- bowl: gold plus a cool reflection of the blue shield on the right -->
+<linearGradient id="irbowl" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#6A4704"/><stop offset=".1" stop-color="#C58E16"/>
+  <stop offset=".2" stop-color="#FFF5D0"/><stop offset=".28" stop-color="#FFD25C"/>
+  <stop offset=".5" stop-color="#B98110"/><stop offset=".66" stop-color="#F6C750"/>
+  <stop offset=".8" stop-color="#8C6A2E"/><stop offset=".9" stop-color="#4C4A63"/>
+  <stop offset="1" stop-color="#2A2A3E"/>
+</linearGradient>
+<linearGradient id="irsilver" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF"/><stop offset=".42" stop-color="#E6E9F2"/>
+  <stop offset=".52" stop-color="#9BA4C0"/><stop offset=".62" stop-color="#D5DAE8"/>
+  <stop offset="1" stop-color="#FFFFFF"/>
+</linearGradient>
+<linearGradient id="irnavy" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#1F3680"/><stop offset=".45" stop-color="#101D4E"/><stop offset="1" stop-color="#040817"/>
+</linearGradient>
+<radialGradient id="irspot" cx="50%" cy="22%" r="62%">
+  <stop offset="0" stop-color="#9FB6FF" stop-opacity=".26"/><stop offset=".5" stop-color="#5D78D6" stop-opacity=".07"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="irtrophyGlow" cx="50%" cy="50%" r="50%">
+  <stop offset="0" stop-color="#FFC63D" stop-opacity=".5"/><stop offset="1" stop-color="#FFC63D" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="irgloss" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity=".22"/><stop offset=".45" stop-color="#FFFFFF" stop-opacity=".04"/><stop offset=".46" stop-color="#FFFFFF" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="irsheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".07"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<pattern id="irweave" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+  <rect width="6" height="6" fill="none"/><rect width="3" height="6" fill="#FFFFFF" opacity=".035"/>
+</pattern>
+<clipPath id="irclipShield"><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z"/></clipPath>
+<clipPath id="irclipBowl"><path d="M140 178 L260 178 C260 252 236 284 200 290 C164 284 140 252 140 178 Z"/></clipPath>
+
+<!-- embossed metal: specular light from top-left -->
+<filter id="irbevel" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="1.6" result="b"/>
+  <feSpecularLighting in="b" surfaceScale="3.5" specularConstant="1.05" specularExponent="26" lighting-color="#FFFFFF" result="s">
+    <fePointLight x="80" y="-120" z="260"/>
+  </feSpecularLighting>
+  <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+  <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".75" k4="0"/>
+</filter>
+<filter id="irbevelSoft" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="1.1" result="b"/>
+  <feSpecularLighting in="b" surfaceScale="2.4" specularConstant=".9" specularExponent="30" lighting-color="#FFFFFF" result="s">
+    <fePointLight x="80" y="-120" z="240"/>
+  </feSpecularLighting>
+  <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+  <feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".6" k4="0"/>
+</filter>
+<!-- fabric grain on the field -->
+<filter id="irgrain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 -.3" result="g"/>
+  <feComposite in="g" in2="SourceAlpha" operator="in"/>
+</filter>
+<filter id="irinner" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter>
+<filter id="irblur3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+<filter id="irdrop" x="-20%" y="-15%" width="140%" height="140%">
+  <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".55"/>
+</filter>
+<filter id="irshadowSm" x="-20%" y="-20%" width="140%" height="160%">
+  <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#000" flood-opacity=".55"/>
+</filter>
+</defs><g filter="url(#irdrop)"><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z" fill="url(#irnavy)"/><g clip-path="url(#irclipShield)"><rect x="0" y="0" width="400" height="480" fill="url(#irweave)"/><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z" fill="#FFFFFF" filter="url(#irgrain)"/><rect x="0" y="0" width="400" height="480" fill="url(#irspot)"/><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z" fill="none" stroke="#000" stroke-opacity=".9" stroke-width="56" filter="url(#irinner)"/><path d="M28 50 L200 14 L372 50 L372 230 L28 230 Z" fill="url(#irsheen)"/></g><path d="M200 34 L354 66 L354 244 C354 340 286 404 200 444 C114 404 46 340 46 244 L46 66 Z" fill="none" stroke="#3E2902" stroke-width="3.5" transform="translate(0 1)"/><path d="M200 34 L354 66 L354 244 C354 340 286 404 200 444 C114 404 46 340 46 244 L46 66 Z" fill="none" stroke="url(#irgoldRim)" stroke-width="2.5" filter="url(#irbevelSoft)"/><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z" fill="none" stroke="#2E1F01" stroke-width="18" stroke-linejoin="miter"/><path d="M200 14 L372 50 L372 244 C372 352 296 424 200 466 C104 424 28 352 28 244 L28 50 Z" fill="none" stroke="url(#irgoldRim)" stroke-width="13" stroke-linejoin="miter" filter="url(#irbevel)"/><path d="M34 54 L200 19 L366 54" fill="none" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="1.6"/><polygon points="200.00,106.50 203.97,116.04 214.27,116.86 206.42,123.59 208.82,133.64 200.00,128.25 191.18,133.64 193.58,123.59 185.73,116.86 196.03,116.04" fill="#4A3102"/><polygon points="200.00,105.00 203.97,114.54 214.27,115.36 206.42,122.09 208.82,132.14 200.00,126.75 191.18,132.14 193.58,122.09 185.73,115.36 196.03,114.54" fill="url(#irgoldV)" filter="url(#irbevelSoft)"/><g transform="translate(0 -10)"><ellipse cx="200" cy="236" rx="96" ry="88" fill="url(#irtrophyGlow)"/><g filter="url(#irshadowSm)"><path d="M146 196 C110 194 106 248 154 260" fill="none" stroke="#4A3102" stroke-width="13" stroke-linecap="round"/><path d="M146 196 C110 194 106 248 154 260" fill="none" stroke="url(#irgoldV)" stroke-width="10" stroke-linecap="round" filter="url(#irbevelSoft)"/><path d="M146 196 C110 194 106 248 154 260" fill="none" stroke="#FFF7DA" stroke-opacity=".6" stroke-width="2" stroke-linecap="round" transform="translate(-1 -2)"/><path d="M254 196 C290 194 294 248 246 260" fill="none" stroke="#4A3102" stroke-width="13" stroke-linecap="round"/><path d="M254 196 C290 194 294 248 246 260" fill="none" stroke="url(#irgoldV)" stroke-width="10" stroke-linecap="round" filter="url(#irbevelSoft)"/><path d="M254 196 C290 194 294 248 246 260" fill="none" stroke="#FFF7DA" stroke-opacity=".6" stroke-width="2" stroke-linecap="round" transform="translate(-1 -2)"/><path d="M140 178 L260 178 C260 252 236 284 200 290 C164 284 140 252 140 178 Z" fill="url(#irbowl)" filter="url(#irbevel)"/></g><g clip-path="url(#irclipBowl)"><g fill="#FFE7A3" opacity=".55" transform="translate(0 1.4)"><polygon points="200.0,215.0 214.3,225.4 208.8,242.1 191.2,242.1 185.7,225.4"/><polygon points="200.0,195.0 185.7,184.6 191.2,167.9 208.8,167.9 214.3,184.6"/><polygon points="233.3,219.2 238.7,202.4 256.4,202.4 261.8,219.2 247.6,229.5"/><polygon points="220.6,258.3 238.2,258.3 243.7,275.1 229.4,285.5 215.1,275.1"/><polygon points="179.4,258.3 184.9,275.1 170.6,285.5 156.3,275.1 161.8,258.3"/><polygon points="166.7,219.2 152.4,229.5 138.2,219.2 143.6,202.4 161.3,202.4"/></g><path d="M200.0 215.0 L200.0 195.0 M214.3 225.4 L233.3 219.2 M208.8 242.1 L220.6 258.3 M191.2 242.1 L179.4 258.3 M185.7 225.4 L166.7 219.2" stroke="#FFE7A3" stroke-opacity=".5" stroke-width="3" transform="translate(0 1.2)"/><g fill="#0A1230"><polygon points="200.0,215.0 214.3,225.4 208.8,242.1 191.2,242.1 185.7,225.4"/><polygon points="200.0,195.0 185.7,184.6 191.2,167.9 208.8,167.9 214.3,184.6"/><polygon points="233.3,219.2 238.7,202.4 256.4,202.4 261.8,219.2 247.6,229.5"/><polygon points="220.6,258.3 238.2,258.3 243.7,275.1 229.4,285.5 215.1,275.1"/><polygon points="179.4,258.3 184.9,275.1 170.6,285.5 156.3,275.1 161.8,258.3"/><polygon points="166.7,219.2 152.4,229.5 138.2,219.2 143.6,202.4 161.3,202.4"/></g><path d="M200.0 215.0 L200.0 195.0 M214.3 225.4 L233.3 219.2 M208.8 242.1 L220.6 258.3 M191.2 242.1 L179.4 258.3 M185.7 225.4 L166.7 219.2" stroke="#0A1230" stroke-width="3"/><rect x="140" y="178" width="120" height="112" fill="url(#irgloss)"/></g><path d="M156 188 C156 236 170 266 190 282" fill="none" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="5" stroke-linecap="round"/><path d="M168 188 C168 222 176 246 186 262" fill="none" stroke="#FFFFFF" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/><rect x="132" y="171" width="136" height="12" rx="4" fill="#4A3102"/><rect x="132" y="169" width="136" height="12" rx="4" fill="url(#irgoldH)" filter="url(#irbevelSoft)"/><rect x="138" y="170.5" width="70" height="2" rx="1" fill="#FFFFFF" opacity=".7"/><path d="M192 290 L208 290 L211 304 L189 304 Z" fill="url(#irgoldH)" filter="url(#irbevelSoft)"/><ellipse cx="200" cy="306" rx="14" ry="5" fill="url(#irgoldH)" filter="url(#irbevelSoft)"/><path d="M166 312 L234 312 L243 336 L157 336 Z" fill="url(#irgoldH)" filter="url(#irbevel)"/><path d="M168 314 L232 314" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="1.5"/><rect x="150" y="336" width="100" height="10" rx="2" fill="#2A1C01"/><rect x="150" y="335" width="100" height="9" rx="2" fill="url(#irgoldH)" filter="url(#irbevelSoft)"/></g><polygon points="150.00,376.00 152.51,382.04 159.04,382.56 154.07,386.82 155.58,393.19 150.00,389.77 144.42,393.19 145.93,386.82 140.96,382.56 147.49,382.04" fill="#4A3102"/><polygon points="150.00,374.50 152.51,380.54 159.04,381.06 154.07,385.32 155.58,391.69 150.00,388.27 144.42,391.69 145.93,385.32 140.96,381.06 147.49,380.54" fill="url(#irgoldV)" filter="url(#irbevelSoft)"/><polygon points="200.00,381.50 203.17,389.13 211.41,389.79 205.14,395.17 207.05,403.21 200.00,398.90 192.95,403.21 194.86,395.17 188.59,389.79 196.83,389.13" fill="#4A3102"/><polygon points="200.00,380.00 203.17,387.63 211.41,388.29 205.14,393.67 207.05,401.71 200.00,397.40 192.95,401.71 194.86,393.67 188.59,388.29 196.83,387.63" fill="url(#irgoldV)" filter="url(#irbevelSoft)"/><polygon points="250.00,376.00 252.51,382.04 259.04,382.56 254.07,386.82 255.58,393.19 250.00,389.77 244.42,393.19 245.93,386.82 240.96,382.56 247.49,382.04" fill="#4A3102"/><polygon points="250.00,374.50 252.51,380.54 259.04,381.06 254.07,385.32 255.58,391.69 250.00,388.27 244.42,391.69 245.93,385.32 240.96,381.06 247.49,380.54" fill="url(#irgoldV)" filter="url(#irbevelSoft)"/></g><g opacity="1"><circle cx="352" cy="58" r="7.2" fill="#FFF8E0" opacity=".55" filter="url(#irblur3)"/><path d="M352 42 C353.92 56.08 353.92 56.08 368 58 C353.92 59.92 353.92 59.92 352 74 C350.08 59.92 350.08 59.92 336 58 C350.08 56.08 350.08 56.08 352 42 Z" fill="#FFFFFF"/></g><g opacity="0.9"><circle cx="150" cy="166" r="4.0" fill="#FFF8E0" opacity=".55" filter="url(#irblur3)"/><path d="M150 157 C151.08 164.92 151.08 164.92 159 166 C151.08 167.08 151.08 167.08 150 175 C148.92 167.08 148.92 167.08 141 166 C148.92 164.92 148.92 164.92 150 157 Z" fill="#FFFFFF"/></g></svg>

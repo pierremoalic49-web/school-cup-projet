@@ -132,10 +132,10 @@ function Login({ onDone }: { onDone: (who: string) => void }) {
   return (
     <div className="login">
       <form className="card" onSubmit={submit} noValidate>
-        <h1>
-          School <b>Cup</b>
+        <h1 className="login-logo">
+          <img src="/logo/ecusson.webp" alt="School Cup" width={120} height={139} />
         </h1>
-        <p className="muted" style={{ marginTop: 0 }}>
+        <p className="muted" style={{ marginTop: 0, textAlign: 'center' }}>
           Espace organisateurs
         </p>
         {local && (
@@ -200,7 +200,7 @@ function Shell({ who, onOut }: { who: string; onOut: () => void }) {
     <div className="adm">
       <header className="adm-head">
         <span className="brand">
-          SCHOOL <b>CUP</b>
+          <img src="/logo/horizontal-plat.svg" alt="School Cup" width={79} height={34} />
           <small>Admin</small>
         </span>
         <div className="adm-head-actions">

@@ -6,6 +6,8 @@
 |---|---|---|
 | Stade 3D, foule, ville, ciel, textures | Créés par le code du site (`site/src/stadium/`) | Propriété du projet |
 | Sons (foule, clameur, sifflet) | Générés par le code (`site/src/audio/sound.ts`) | Propriété du projet |
+| Musique « Arena Hype Anthem » (`assets/sons/arena-hype-anthem.mp3`) | BudgetPixel AI — <https://budgetpixel.com/background-music/arena-hype-anthem-2a10f6b2> | CC BY 4.0, crédit affiché en pied de page du site ; modifié (coupé, bouclé, mixé) |
+| Logo School Cup (`assets/logo/`) | Créé pour le projet | Propriété du projet |
 | Polices Anton, Barlow Condensed, Work Sans | Google Fonts | SIL Open Font License |
 | Three.js | threejs.org | MIT |
 | React, Vite | Meta, Vite | MIT |

@@ -1,5 +1,6 @@
 // Le site public : le stade 3D en fond, l'intro, la cinématique, puis les sections par-dessus.
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { music, preloadMusic } from '../audio/music'
 import { sound } from '../audio/sound'
 import { featuredMatch, isLive, matchTitle, minuteLabel, playerName } from '../data/bracket'
 import { storeGet, storeSet } from '../data/safe'
@@ -81,6 +82,8 @@ export default function PublicSite() {
           if (phaseRef.current !== 'arrived') arrivedRef.current(phaseRef.current === 'flight')
         }
         setReady(true)
+        // Pendant que le visiteur regarde la vue du ciel, on prépare la musique (aucun retard au clic).
+        if (phaseRef.current === 'intro') void preloadMusic()
       })
       .catch((e) => {
         console.error('Stade 3D indisponible', e)
@@ -106,6 +109,7 @@ export default function PublicSite() {
     document.body.classList.add('arrived')
     storeSet('local', 'schoolcup-visited', '1')
     flash()
+    music.arrived()
     if (withSound) {
       sound.roar(1)
       sound.whistle()
@@ -144,7 +148,10 @@ export default function PublicSite() {
     setSoundOn(true)
     sound.crowd(0.05, 0.6)
     const s = stadiumRef.current
-    if (!s || noGL || short || reducedMotion()) {
+    const instant = !s || noGL || short || reducedMotion()
+    // La musique part maintenant ; la batterie tombera pile à l'arrivée dans le stade.
+    music.start(instant ? (short ? 0.15 : 0.5) : FLIGHT_SECONDS)
+    if (instant) {
       phaseRef.current = 'flight'
       setTimeout(() => arrived(true), short ? 150 : 500)
       return
@@ -244,6 +251,7 @@ export default function PublicSite() {
         setGoal({ who: p ? playerName(p) : 'But', team: team?.name ?? '', key: Date.now() })
         setLastScorer(p?.id ?? null)
         flash()
+        music.duck()
         sound.roar(1)
         sound.boom()
         sound.whistle([
@@ -268,6 +276,7 @@ export default function PublicSite() {
       sound.start()
       sound.setMuted(false)
       sound.crowd(0.16, 2)
+      music.ambient()
       setSoundOn(true)
       setMuted(false)
       return
@@ -300,9 +309,12 @@ export default function PublicSite() {
             <p className="crest-kicker">
               {db?.settings.school ?? 'Lycée Sacré-Cœur La Salle'} · {db?.settings.city ?? 'Angers'}
             </p>
-            <h1 style={{ margin: 0, display: 'contents' }}>
-              <span className="crest-word w1">School</span>
-              <span className="crest-word w2">Cup</span>
+            <h1 className="crest-logo">
+              <img src="/logo/ecusson.webp" alt="School Cup" width={760} height={881} decoding="async" fetchPriority="high" />
+              {/* Reflet de lumière qui balaie l'or, découpé à la forme exacte du logo. */}
+              <span className="crest-shine" aria-hidden="true" />
+              <span className="crest-sparkle s1" aria-hidden="true" />
+              <span className="crest-sparkle s2" aria-hidden="true" />
             </h1>
             <p className="crest-rule">Tournoi de football</p>
           </div>
@@ -336,7 +348,7 @@ export default function PublicSite() {
       <header className="topbar">
         <div className="topbar-in">
           <a className="brand" href="#top" aria-label="School Cup, haut de page">
-            SCHOOL <b>CUP</b>
+            <img src="/logo/horizontal-plat.svg" alt="School Cup" width={92} height={40} />
           </a>
           <nav className="nav" aria-label="Navigation principale">
             {demo && (
@@ -412,6 +424,18 @@ export default function PublicSite() {
               Site réalisé par Pierre MOALIC · <a href="/admin">Espace organisateurs</a>
             </span>
           </div>
+          {/* Crédit obligatoire de la licence CC BY 4.0 de la musique. */}
+          <p className="credits">
+            Musique : «&nbsp;
+            <a href="https://budgetpixel.com/background-music/arena-hype-anthem-2a10f6b2" target="_blank" rel="noopener noreferrer">
+              Arena Hype Anthem
+            </a>
+            &nbsp;» par BudgetPixel AI —{' '}
+            <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener noreferrer">
+              CC BY 4.0
+            </a>{' '}
+            — modifié (coupé, bouclé, mixé)
+          </p>
         </footer>
       </main>
 
@@ -435,6 +459,7 @@ export default function PublicSite() {
 
       {goal && (
         <div className="goal" key={goal.key} role="status" aria-live="assertive">
+          <img className="goal-crest" src="/logo/ecusson.webp" alt="" aria-hidden="true" />
           <p className="goal-word">BUUUT !</p>
           <p className="goal-who">
             {goal.who}

@@ -25,6 +25,17 @@ export function canvas(w: number, h: number) {
   return [c, c.getContext('2d')!] as const
 }
 
+/** Charge une image (logo…) pour la dessiner ensuite dans une texture. */
+export function loadImage(url: string) {
+  return new Promise<HTMLImageElement>((res, rej) => {
+    const img = new Image()
+    img.decoding = 'async'
+    img.onload = () => res(img)
+    img.onerror = () => rej(new Error(`Image introuvable : ${url}`))
+    img.src = url
+  })
+}
+
 /** Halo doux (dégradé radial) utilisé pour les lueurs des projecteurs et des flashs. */
 export function glowTexture(inner = 'rgba(255,255,255,1)', mid = 'rgba(255,236,200,0.35)') {
   const [c, x] = canvas(128, 128)
