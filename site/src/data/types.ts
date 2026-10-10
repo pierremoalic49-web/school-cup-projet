@@ -43,6 +43,7 @@ export interface Player {
   lastInitial: string // RGPD : seulement l'initiale du nom
   position: Position
   rating: number // note « fun » façon jeu vidéo, de 50 à 99
+  number?: number | null // numéro de maillot (1 à 99) ; absent dans les anciennes données → numéro par défaut selon le poste
   photoUrl: string | null
   consent: boolean // autorisation droit à l'image signée par les parents
 }

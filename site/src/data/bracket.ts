@@ -160,6 +160,12 @@ export function matchTitle(db: DB, m: Match): string {
 
 export const playerName = (p: Player) => `${p.firstName} ${p.lastInitial}.`
 
+/** Numéro de maillot : celui saisi par l'admin, sinon un numéro classique selon le poste. */
+export function jerseyNumber(p: Player): number {
+  if (p.number && p.number >= 1 && p.number <= 99) return Math.round(p.number)
+  return { GB: 1, DEF: 4, MIL: 8, ATT: 9 }[p.position] ?? 10
+}
+
 export interface ScorerRow {
   player: Player
   team: Team

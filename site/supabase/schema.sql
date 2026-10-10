@@ -38,6 +38,7 @@ create table if not exists public.players (
   last_initial text not null check (char_length(last_initial) = 1),  -- RGPD : initiale seulement
   position text not null check (position in ('GB', 'DEF', 'MIL', 'ATT')),
   rating int not null default 75 check (rating between 50 and 99),
+  number int check (number between 1 and 99),            -- numéro de maillot
   photo_url text,
   consent boolean not null default false,
   -- Droit à l'image : impossible d'avoir une photo sans autorisation, même par erreur.
@@ -77,6 +78,9 @@ create table if not exists public.goals (
 create table if not exists public.admins (
   user_id uuid primary key references auth.users (id) on delete cascade
 );
+
+-- Base déjà créée avec une version plus ancienne de ce script : on ajoute les colonnes manquantes.
+alter table public.players add column if not exists number int check (number between 1 and 99);
 
 create index if not exists players_team_idx on public.players (team_id);
 create index if not exists matches_tournament_idx on public.matches (tournament_id);

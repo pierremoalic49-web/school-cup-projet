@@ -70,6 +70,7 @@ export function demoDB(): DB {
           lastInitial: initials[Math.floor(rand() * initials.length)],
           position,
           rating: 68 + Math.floor(rand() * 24) + (position === 'ATT' ? 4 : 0),
+          number: [1, 4, 5, 8, 9][pi],
           photoUrl: null,
           consent: false,
         }

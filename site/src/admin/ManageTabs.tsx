@@ -1,6 +1,6 @@
 // Onglets de gestion : matchs (tableau), équipes, joueurs (avec photos), réglages du tournoi.
 import { useState, type FormEvent, type ReactNode } from 'react'
-import { playerName, roundName, roundsOf, statusLabel } from '../data/bracket'
+import { jerseyNumber, playerName, roundName, roundsOf, statusLabel } from '../data/bracket'
 import { actions, getBackendMode } from '../data/store'
 import type { DB, Player, Position, Settings, Team, TournamentId } from '../data/types'
 import { Crest } from '../ui/Crest'
@@ -344,10 +344,22 @@ function PlayerEditor({ db, player, onClose }: { db: DB; player: Player; onClose
             </select>
           </label>
           <label className="field">
-            <span>Note de la carte : {d.rating}</span>
-            <input type="range" min={50} max={99} value={d.rating} onChange={(e) => setD({ ...d, rating: +e.target.value })} />
+            <span>Numéro de maillot</span>
+            <input
+              className="in"
+              type="number"
+              inputMode="numeric"
+              min={1}
+              max={99}
+              value={d.number ?? jerseyNumber(d)}
+              onChange={(e) => setD({ ...d, number: e.target.value === '' ? null : Math.max(1, Math.min(99, Math.round(+e.target.value))) })}
+            />
           </label>
         </div>
+        <label className="field">
+          <span>Note de la carte : {d.rating}</span>
+          <input type="range" min={50} max={99} value={d.rating} onChange={(e) => setD({ ...d, rating: +e.target.value })} />
+        </label>
 
         <label className={`check${d.consent ? ' on' : ''}`} style={{ marginBottom: 14 }}>
           <input
@@ -450,7 +462,7 @@ export function PlayersTab({ db }: { db: DB }) {
                 {team?.captainId === p.id ? ' (C)' : ''}
               </b>
               <small>
-                {p.position} · note {p.rating}
+                n° {jerseyNumber(p)} · {p.position} · note {p.rating}
               </small>
             </span>
             <span className={`chip${p.consent ? ' ok' : ' warn'}`}>{p.consent ? 'Photo OK' : 'Sans photo'}</span>

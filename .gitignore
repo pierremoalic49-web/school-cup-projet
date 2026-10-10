@@ -2,6 +2,10 @@
 node_modules/
 dist/
 
+# Fichiers sources lourds des personnages 3D (≈ 170 Mo, retéléchargeables) : seule la version convertie va dans le site
+assets/joueur-3d/rocketbox/
+site/atelier/out/
+
 # Clés secrètes : ne jamais les envoyer sur GitHub
 .env
 .env.*

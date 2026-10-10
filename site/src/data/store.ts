@@ -4,7 +4,7 @@
 //    Parfait pour tester : ouvre le site dans un onglet et /admin dans un autre.
 //  - mode SUPABASE (quand les clés sont dans .env) : vraie base en ligne, temps réel sur tous les téléphones.
 import { useSyncExternalStore } from 'react'
-import { buildBracket, uid, winnerOf } from './bracket'
+import { buildBracket, jerseyNumber, uid, winnerOf } from './bracket'
 import { defaultSettings, demoDB, emptyDB } from './demo'
 import { storeGet, storeSet } from './safe'
 import type { DB, Goal, Match, Player, Settings, Team, TournamentId } from './types'
@@ -291,7 +291,10 @@ export const actions = {
     await del('players', [id])
   },
   newPlayer(teamId: string): Player {
-    return { id: uid(), teamId, firstName: '', lastInitial: '', position: 'MIL', rating: 75, photoUrl: null, consent: false }
+    // Premier numéro de maillot libre dans l'équipe (les numéros « de légende » d'abord).
+    const used = new Set(db!.players.filter((p) => p.teamId === teamId).map(jerseyNumber))
+    const number = [10, 7, 11, 9, 8, 6, 2, 3, 4, 5, 14, 17, 19, 21, 23].find((n) => !used.has(n)) ?? Array.from({ length: 98 }, (_, i) => i + 2).find((n) => !used.has(n)) ?? 99
+    return { id: uid(), teamId, firstName: '', lastInitial: '', position: 'MIL', rating: 75, number, photoUrl: null, consent: false }
   },
   async uploadPhoto(p: Player, file: Blob) {
     if (!p.consent) throw new Error('Coche d’abord l’autorisation droit à l’image.')
