@@ -3,6 +3,7 @@
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { paintKit } from '../src/reveal/kit'
 
 declare const __ASSETS_DIR__: string
 const SRC = '/@fs/' + __ASSETS_DIR__ + 'joueur-3d/rocketbox/'
@@ -75,6 +76,17 @@ function faceMaskCanvas() {
   return new THREE.CanvasTexture(c)
 }
 
+// Tenue School Cup (garçon) : texture repeinte + numéro et prénom imprimés.
+let kitTex: THREE.Texture | null = null
+if (who === 'm' && q.get('kit') !== '0') {
+  await document.fonts.load('400 64px Anton')
+  const load = (u: string) => new Promise<HTMLImageElement>((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = u })
+  const [base, crest] = await Promise.all([load('/joueurs/kit-g.webp'), load('/logo/ecusson-plat.webp')])
+  kitTex = new THREE.CanvasTexture(paintKit(base, crest, { number: +(q.get('n') ?? 10), name: q.get('nom') ?? 'Théo' }))
+  kitTex.colorSpace = THREE.SRGBColorSpace
+  kitTex.anisotropy = 8
+}
+
 let faceMaskData: ImageData | null = null
 fbx.traverse((o) => {
   const m = o as THREE.SkinnedMesh
@@ -85,7 +97,7 @@ fbx.traverse((o) => {
     const part = isHead ? 'head' : 'body'
     const mat = new THREE.MeshStandardMaterial({
       name: old.name,
-      map: tex(`${pre}_${part}_color`),
+      map: !isHead && kitTex ? kitTex : tex(`${pre}_${part}_color`),
       normalMap: tex(`${pre}_${part}_normal`, false),
       roughness: isHead ? 0.6 : 0.75,
     })
