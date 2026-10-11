@@ -57,7 +57,7 @@ export function paintKit(base: HTMLImageElement, crest: HTMLImageElement | null,
     const w = (h * crest.naturalWidth) / crest.naturalHeight
     x.drawImage(crest, 1075 - w / 2, 1155 - h / 2, w, h)
   }
-  printText(x, 'SCHOOL CUP', 975, 1290, 92, 400, OFFWHITE, false)
+  printText(x, 'SCHOOL CUP', 950, 1290, 78, 260, OFFWHITE, false)
   printText(x, num, 975, 1500, 210, 300, GOLD, false)
   // Numéro sur le short (cuisse gauche).
   printText(x, num, 335, 330, 120, 160, GOLD, false)

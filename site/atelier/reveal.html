@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atelier · révélation</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #000; }
+      canvas { display: block; width: 100vw; height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <script type="module">
+      import { Reveal } from '../src/reveal/Reveal.ts'
+      const q = new URLSearchParams(location.search)
+      const r = new Reveal(document.getElementById('c'))
+      const fit = () => r.resize(innerWidth, innerHeight)
+      fit()
+      addEventListener('resize', fit)
+      r.yaw = (+(q.get('yaw') ?? 0) * Math.PI) / 180
+      await r.show({ number: +(q.get('n') ?? 10), name: q.get('nom') ?? 'Théo' })
+      window.reveal = r
+    </script>
+  </body>
+</html>
