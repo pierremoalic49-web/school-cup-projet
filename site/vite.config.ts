@@ -7,6 +7,8 @@ const assetsDir = fileURLToPath(new URL('../assets/', import.meta.url)).replace(
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Sur GitHub Pages, le site vit dans /school-cup-projet/ (variable fournie par la publication automatique).
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react()],
   define: { __ASSETS_DIR__: JSON.stringify(assetsDir) },
   server: { fs: { allow: ['.', '..'] } },

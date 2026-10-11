@@ -2,9 +2,10 @@
 // chargement, tenue School Cup, visage effacé, animations.
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { asset } from '../base'
 import { paintKit, type KitOptions } from './kit'
 
-const DIR = '/joueurs/'
+const DIR = asset('joueurs/')
 // Les textures d'origine (TGA) ne sont pas fournies : on remplace leur chargement par un pixel vide.
 const EMPTY = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
 
@@ -79,7 +80,7 @@ export async function loadCharacter(): Promise<Character> {
     const [model, base, crest, bodyNormal, head, headNormal, idle, walkStart, walkStop, cheer] = await Promise.all([
       fbx.loadAsync(DIR + 'g.fbx'),
       img(DIR + 'kit-g.webp'),
-      img('/logo/ecusson-plat.webp'),
+      img(asset('logo/ecusson-plat.webp')),
       tex(DIR + 'g-body-normal.webp', false),
       tex(DIR + 'g-head.webp', true),
       tex(DIR + 'g-head-normal.webp', false),

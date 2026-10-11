@@ -1,6 +1,7 @@
 // La pelouse : couleur, bandes de tonte qui changent selon l'angle de vue, lignes, logo peint,
 // usure devant les buts. Plus les buts avec leurs filets qui bougent et les drapeaux de coin.
 import * as THREE from 'three'
+import { asset } from '../base'
 import { canvas, GLSL_NOISE, loadImage, seeded, type Tier } from './util'
 
 export const PITCH_L = 105
@@ -170,7 +171,7 @@ export function buildPitch(scene: THREE.Scene, renderer: THREE.WebGLRenderer, ti
   tex.anisotropy = Math.min(tier === 'low' ? 4 : 12, renderer.capabilities.getMaxAnisotropy())
   const x = c.getContext('2d')!
   // L'écusson arrive un peu après le stade : on le peint dès qu'il est chargé.
-  loadImage('/logo/ecusson-blanc.png')
+  loadImage(asset('logo/ecusson-blanc.png'))
     .then((img) => {
       paintLogo(x, PX, cx, cy, img)
       tex.needsUpdate = true

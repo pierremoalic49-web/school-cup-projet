@@ -1,6 +1,7 @@
 // L'espace organisateurs (/admin) : connexion, puis 5 onglets.
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { storeGet, storeSet } from '../data/safe'
+import { asset, BASE } from '../base'
 import { auth, getBackendMode, initStore, useDB } from '../data/store'
 import { Boot, Bracket, Gear, Info, Live, Users } from '../ui/Icons'
 import './admin.css'
@@ -133,7 +134,7 @@ function Login({ onDone }: { onDone: (who: string) => void }) {
     <div className="login">
       <form className="card" onSubmit={submit} noValidate>
         <h1 className="login-logo">
-          <img src="/logo/ecusson.webp" alt="School Cup" width={120} height={139} />
+          <img src={asset('logo/ecusson.webp')} alt="School Cup" width={120} height={139} />
         </h1>
         <p className="muted" style={{ marginTop: 0, textAlign: 'center' }}>
           Espace organisateurs
@@ -165,7 +166,7 @@ function Login({ onDone }: { onDone: (who: string) => void }) {
           {busy ? 'Connexion…' : 'Se connecter'}
         </button>
         <p style={{ margin: '16px 0 0', textAlign: 'center' }}>
-          <a href="/" style={{ color: 'var(--dim)' }}>
+          <a href={BASE} style={{ color: 'var(--dim)' }}>
             Retour au site
           </a>
         </p>
@@ -200,11 +201,11 @@ function Shell({ who, onOut }: { who: string; onOut: () => void }) {
     <div className="adm">
       <header className="adm-head">
         <span className="brand">
-          <img src="/logo/horizontal-plat.svg" alt="School Cup" width={79} height={34} />
+          <img src={asset('logo/horizontal-plat.svg')} alt="School Cup" width={79} height={34} />
           <small>Admin</small>
         </span>
         <div className="adm-head-actions">
-          <a className="adm-link" href="/" target="_blank" rel="noreferrer">
+          <a className="adm-link" href={BASE} target="_blank" rel="noreferrer">
             Voir le site
           </a>
           <button

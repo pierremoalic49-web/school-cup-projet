@@ -3,6 +3,7 @@
 // public/sons/ (foule.mp3, but.mp3, sifflet.mp3), ils sont utilisés à la place.
 // Rien ne démarre tout seul : tout commence au clic sur « Entrer dans le stade ».
 
+import { asset } from '../base'
 import { storeGet, storeSet } from '../data/safe'
 
 type Ctx = AudioContext
@@ -46,7 +47,7 @@ async function tryLoad(name: 'foule' | 'but' | 'sifflet') {
   const abort = new AbortController()
   const timer = setTimeout(() => abort.abort(), 6000)
   try {
-    const r = await fetch(`/sons/${name}.mp3`, { signal: abort.signal })
+    const r = await fetch(asset(`sons/${name}.mp3`), { signal: abort.signal })
     if (!r.ok || !(r.headers.get('content-type') ?? '').includes('audio')) return
     files[name] = await ctx!.decodeAudioData(await r.arrayBuffer())
   } catch {

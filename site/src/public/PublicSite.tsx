@@ -1,6 +1,7 @@
 // Le site public : le stade 3D en fond, l'intro, la cinématique, puis les sections par-dessus.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { music, preloadMusic } from '../audio/music'
+import { asset } from '../base'
 import { sound } from '../audio/sound'
 import { featuredMatch, isLive, matchTitle, minuteLabel, playerName } from '../data/bracket'
 import { storeGet, storeSet } from '../data/safe'
@@ -310,7 +311,7 @@ export default function PublicSite() {
               {db?.settings.school ?? 'Lycée Sacré-Cœur La Salle'} · {db?.settings.city ?? 'Angers'}
             </p>
             <h1 className="crest-logo">
-              <img src="/logo/ecusson.webp" alt="School Cup" width={760} height={881} decoding="async" fetchPriority="high" />
+              <img src={asset('logo/ecusson.webp')} alt="School Cup" width={760} height={881} decoding="async" fetchPriority="high" />
               {/* Reflet de lumière qui balaie l'or, découpé à la forme exacte du logo. */}
               <span className="crest-shine" aria-hidden="true" />
               <span className="crest-sparkle s1" aria-hidden="true" />
@@ -348,7 +349,7 @@ export default function PublicSite() {
       <header className="topbar">
         <div className="topbar-in">
           <a className="brand" href="#top" aria-label="School Cup, haut de page">
-            <img src="/logo/horizontal-plat.svg" alt="School Cup" width={92} height={40} />
+            <img src={asset('logo/horizontal-plat.svg')} alt="School Cup" width={92} height={40} />
           </a>
           <nav className="nav" aria-label="Navigation principale">
             {demo && (
@@ -421,7 +422,7 @@ export default function PublicSite() {
               {db?.settings.name ?? 'School Cup'} · {db?.settings.school ?? 'Lycée Sacré-Cœur La Salle'}, {db?.settings.city ?? 'Angers'}
             </span>
             <span>
-              Site réalisé par Pierre MOALIC · <a href="/admin">Espace organisateurs</a>
+              Site réalisé par Pierre MOALIC · <a href={asset('admin')}>Espace organisateurs</a>
             </span>
           </div>
           {/* Crédit obligatoire de la licence CC BY 4.0 de la musique. */}
@@ -459,7 +460,7 @@ export default function PublicSite() {
 
       {goal && (
         <div className="goal" key={goal.key} role="status" aria-live="assertive">
-          <img className="goal-crest" src="/logo/ecusson.webp" alt="" aria-hidden="true" />
+          <img className="goal-crest" src={asset('logo/ecusson.webp')} alt="" aria-hidden="true" />
           <p className="goal-word">BUUUT !</p>
           <p className="goal-who">
             {goal.who}

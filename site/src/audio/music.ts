@@ -3,9 +3,10 @@
 //   (le moment le plus fort, à 9,56 s dans le morceau) tombe pile sur l'arrivée au bord du terrain.
 // - Ensuite elle tourne en boucle sans coupure, plus bas, sous la rumeur de la foule.
 // - Elle s'efface quelques secondes sur chaque « BUUUT ! » pour laisser passer la clameur.
+import { asset } from '../base'
 import { audioGraph } from './sound'
 
-const URL = '/sons/arena-hype-anthem.mp3'
+const URL = asset('sons/arena-hype-anthem.mp3')
 /** Entrée de la batterie, mesurée sur la forme d'onde du morceau (en secondes). */
 export const MUSIC_DROP = 9.56
 // La boucle va de l'entrée de la batterie jusqu'avant la fin du morceau, avec 1,5 s de fondu enchaîné.

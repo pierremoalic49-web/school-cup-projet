@@ -1,6 +1,7 @@
 ﻿// Les panneaux LED qui défilent autour du terrain et l'écran géant (qui affiche le vrai score).
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { asset } from '../base'
 import { canvas, loadImage } from './util'
 
 export interface ScreenInfo {
@@ -189,7 +190,7 @@ export function buildScreens(scene: THREE.Scene) {
     draw(0)
     redrawLed()
   })
-  loadImage('/logo/icone.webp')
+  loadImage(asset('logo/icone.webp'))
     .then((img) => {
       icon = img
       draw(0)
