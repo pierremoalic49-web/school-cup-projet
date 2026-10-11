@@ -104,10 +104,12 @@ function localBackend(): Backend {
           /* donnée illisible : on l'ignore */
         }
       }
-      window.addEventListener('storage', onStorage)
+      // (Hors navigateur, par exemple pendant les tests, il n'y a pas de « window ».)
+      const win = typeof window !== 'undefined' ? window : null
+      win?.addEventListener('storage', onStorage)
       return () => {
         channel?.removeEventListener('message', h)
-        window.removeEventListener('storage', onStorage)
+        win?.removeEventListener('storage', onStorage)
       }
     },
     async put(table, rows) {

@@ -1,4 +1,3 @@
-// @vitest-environment jsdom
 // Tests d'un tournoi complet, comme le jour J : on crée les équipes, le tableau, on marque,
 // on annule, on va aux tirs au but, et on vérifie que le champion est le bon.
 import { beforeAll, describe, expect, it } from 'vitest'

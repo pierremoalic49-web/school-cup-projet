@@ -1,28 +1,39 @@
-name: NodeJS with Webpack
+# Vérification automatique à chaque envoi sur GitHub : le site compile-t-il et les tests passent-ils ?
+# (Le modèle d'origine « NodeJS with Webpack » ne convenait pas : le site utilise Vite et se trouve dans site/.)
+name: Vérification du site
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: site/package-lock.json
 
-    - name: Build
-      run: |
-        npm install
-        npx webpack
+      - name: Installation
+        run: npm ci
+
+      - name: Tests (tableau, buts, qualification, photos…)
+        run: npm test
+
+      - name: Compilation (typage + version en ligne)
+        run: npm run build
